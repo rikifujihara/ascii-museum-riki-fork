@@ -1,4 +1,8 @@
 FILES_PATTERN = "**/*.txt"
+SIGNATURE_HEADER = "==header:signature"
+BODY_START = "==body:start"
+BODY_END = "==body:end"
+SIGNATURE_MANIFEST_FILE = "signatures_manifest.csv"
 
 def signatures
   files = Dir.glob(FILES_PATTERN)
@@ -7,13 +11,13 @@ def signatures
     signatures << File.readlines(f).grep(/^\=\=header\:signature/).flatten
   end
   signatures = signatures.flatten.map do |s|
-    s.sub("==header:signature ", '').strip
+    s.sub("#{SIGNATURE_HEADER} ", '').strip
   end
   signatures.group_by{|e| e}.map{|k, v| [k, v.length]}.to_h
 end
 
 def signatures_manifest
-  File.readlines('signatures_manifest.csv').inject({}) do |manifest, l|
+  File.readlines(SIGNATURE_MANIFEST_FILE).inject({}) do |manifest, l|
     name, count = l.split(',')
     manifest[name.strip]= count.strip.to_i
     manifest
@@ -36,6 +40,9 @@ def diff(signatures_manifest, signatures)
     puts "Found extra signatures: #{extra_signatures.join(', ')}"
   end 
 
+end
+
+def print_all_art
 end
 
 if signatures_manifest == signatures
