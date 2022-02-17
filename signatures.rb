@@ -4,12 +4,17 @@ BODY_START = "==body:start"
 BODY_END = "==body:end"
 SIGNATURE_MANIFEST_FILE = "signatures_manifest.csv"
 
-def signatures
+def file_data
   files = Dir.glob(FILES_PATTERN)
-  signatures = []
+  data = []
   files.each do |f|
-    signatures << File.readlines(f).grep(/^\=\=header\:signature/).flatten
+    data << File.readlines(f).flatten
   end
+  data.flatten
+end
+
+def signatures
+  signatures = file_data.grep(/^\=\=header\:signature/)
   signatures = signatures.flatten.map do |s|
     s.sub("#{SIGNATURE_HEADER} ", '').strip
   end
@@ -39,10 +44,21 @@ def diff(signatures_manifest, signatures)
   unless extra_signatures.size == 0
     puts "Found extra signatures: #{extra_signatures.join(', ')}"
   end 
-
 end
 
 def print_all_art
+  data = file_data
+  body_start_indices = data.each_index.select do |i| 
+    data[i].strip == BODY_START 
+  end
+  body_end_indices = data.each_index.select do |i| 
+    data[i].strip == BODY_END
+  end
+  coords = body_start_indices.zip(body_end_indices)
+  coords.each do |c|
+    puts '*' * 10
+    puts data[(c[0] + 1)..(c[1] - 1)].join("\n")
+  end
 end
 
 if signatures_manifest == signatures
