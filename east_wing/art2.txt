@@ -1,3 +1,4 @@
+==header:signature Linus Torvold
          _nnnn_
         dGGGGMMb
        @p~qp~~qMb
@@ -14,5 +15,3 @@
 _)      \.___.,|     .'
 \____   )MMMMMP|   .'
      `-'       `--' hjm
-
-* Linus Torvold

@@ -4,10 +4,10 @@ def signatures
   files = Dir.glob(FILES_PATTERN)
   signatures = []
   files.each do |f|
-    signatures << File.readlines(f).grep(/^\*/).flatten
+    signatures << File.readlines(f).grep(/^\=\=header\:signature/).flatten
   end
   signatures = signatures.flatten.map do |s|
-    s.sub("* ", '').strip
+    s.sub("==header:signature ", '').strip
   end
   signatures.group_by{|e| e}.map{|k, v| [k, v.length]}.to_h
 end
