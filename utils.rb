@@ -70,6 +70,6 @@ if ARGV[0] == 'verify'
     diff(signatures_manifest, signatures)
     exit 1
   end
-elsif ARGV[0] == 'print_all_art' 
+elsif ARGV[0] == 'print' 
   print_all_art
 end

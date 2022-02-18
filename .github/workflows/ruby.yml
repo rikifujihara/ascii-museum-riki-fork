@@ -28,5 +28,7 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby-version }}
         bundler-cache: true
-    - name: Run tests
+    - name: Verify Manifest
       run: ruby utils.rb verify
+    - name: Print All ASCII Art
+      run: ruby utils.rb print  
