@@ -61,11 +61,15 @@ def print_all_art
   end
 end
 
-if signatures_manifest == signatures
-  puts "Manifest is correct"
-  exit 0
-else
-  puts "Manifest is incorrect"
-  diff(signatures_manifest, signatures)
-  exit 1
+if ARGV[0] == 'verify' 
+  if signatures_manifest == signatures
+    puts "Manifest is correct"
+    exit 0
+  else
+    puts "Manifest is incorrect"
+    diff(signatures_manifest, signatures)
+    exit 1
+  end
+elsif ARGV[0] == 'print_all_art' 
+  print_all_art
 end
