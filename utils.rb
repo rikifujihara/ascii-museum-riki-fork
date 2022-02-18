@@ -46,18 +46,23 @@ def diff(signatures_manifest, signatures)
   end 
 end
 
-def print_all_art
+def fetch_coords(data, start_tag, end_tag)
   data = file_data
   body_start_indices = data.each_index.select do |i| 
-    data[i].strip == BODY_START 
+    data[i].strip == start_tag 
   end
   body_end_indices = data.each_index.select do |i| 
-    data[i].strip == BODY_END
+    data[i].strip == end_tag
   end
-  coords = body_start_indices.zip(body_end_indices)
+  body_start_indices.zip(body_end_indices)
+end
+
+def print_all_art
+  data = file_data
+  coords = fetch_coords(data, BODY_START, BODY_END)
   coords.each do |c|
     puts '*' * 10
-    puts data[(c[0] + 1)..(c[1] - 1)].join("\n")
+    puts data[(c[0] + 1)..(c[1] - 1)].join('')
   end
 end
 
